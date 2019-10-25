@@ -2,117 +2,80 @@
 
 using namespace std;
 
+int lencade(char *cadena){
+    int tam=0;
+    for(int i=0;*cadena++!='\0';i++)
+        tam++;
+    return tam;
+}
 
+int lencader(char *cad){
+    if(*cad=='\0')
+        return 0;
+    return 1+lencader(++cad);
+}
 
-    void imprimirp (int arr[],int tam){
-    while(tam--){
-        cout<<*arr<<'\t';
-        arr++;
-        }
-        cout<<endl;
+void inv(char *cad){
+    char *fin =cad+lencade(cad)-1;
+    while(fin>cad){
+       char t=*cad;
+       *cad=*fin;
+       *fin=t;
+       fin--;
+       cad++;
     }
+}
 
-    int sumapunt(int *arr,int tam){
-        int sum=0;
-        while(tam--){
-           sum+=*arr;
-           arr++;
-        }
+void invre(char *cad,int i=0){
+    char *fin= cad+lencade(cad)-1-i;
+    if (fin<=cad)
+        return;
+    char t=*cad;
+    *cad=*fin;
+    *fin=t;
+    invre(++cad,++i);
 
-        return sum;
-
-    }
-
-    int sumarecursiva(int *arr,int tam){
-            if (tam==1)
-                return *arr;
-        return *arr + sumarecursiva(arr+1,tam-1);
-            }
-
-
-    int invertir (int *arr,int tam){
-     int m = tam/2;
-     int ulti= tam-1;
-     int *ptr=arr+ulti;
-        for (int i = 0;i<m; i++){
-            int aux = *arr;
-            *arr = *ptr;
-            *ptr = aux;
-            arr++;
-            ptr--;
-        }
-
-    }
-
-    int invertire(int *arr, int tam,int i = 0) {
-        int *ptr = arr + tam - 1-2*i;
-        if (i == tam / 2) {
-            return 0 ;
-        }
-        int  aux = *arr;
-            *arr = *ptr;
-            *ptr = aux;
-             arr++;
-
-        invertire(arr, tam,++i);
-    }
-
- void bub(int arr[],int tam){
-    for (int i=1;i<tam;i++){
-          for (int h=0;h<tam-i;h++){
-            if(arr[h]>arr[h+1]){
-                int c = arr[h];
-                arr[h]= arr[h+1];
-                arr[h+1]=c;
-        }
-    }
-    }
 
 }
 
-
-
- void ins(int arr[],int tam){
-    for(int i=1;i<tam;i++){
-        int c = arr[i];
-        int h = i-1;
-        while ((arr[h]>c)&&(h>=0)){
-            arr[h+1] = arr[h];
-            h--;
-            arr[h+1]=c;
-    }
-}
-}
-
-
-
-
-
- int main(){
-    int holi[5]={1,2,3,4,5};
-    int *ptr1 = &holi[0];
-    int *ptr2 = &holi[4];
-    cout << "Hello world!" << endl;
-    cout<<endl;
-    cout<< sumapunt(holi,5)<<endl;
-    cout<<endl;
-    imprimirp(holi,5);
-    cout<<endl;
-    cout<<sumarecursiva(holi,5);
-    cout<<endl;
-    cout<<endl;
-    invertir(holi,5);
-    cout<<endl;
-    imprimirp(holi,5);
-    cout<<endl;
-    cout<<endl;
-    invertire(holi,5);
-    cout<<endl;
-    cout<<endl;
-    imprimirp(holi,5);
-    return 0;
+bool pali(char *cad){
+    int tam=lencade(cad);
+    char *ptr=tam-1+cad;
+    while(ptr-->=cad++)
+    if(*cad!=*ptr)
+        return false;
+    return true;
 
 
 
 }
 
+bool palire(char *cadena,int i=0){
+    char *fin=cadena+lencade(cadena)-1-i;
+    if(*cadena!=*fin)
+        return 0;
+    if(i==lencade(cadena)/2)
+        return 1;
+    return palire(++cadena,++i);
+
+}
+
+int main()
+{
+    char cadena3[]="luz azul";
+    cout<<lencade(cadena3)<<endl;
+    cout<<endl;
+    cout<<lencader(cadena3)<<endl;
+    cout<<endl;
+    inv(cadena3);
+    cout<<cadena3<<endl;
+    cout<<endl;
+    invre(cadena3);
+    cout<<cadena3<<endl;
+    cout<<endl;
+    cout<<pali(cadena3)<<endl;
+    cout<<endl;
+    cout<<palire(cadena3)<<endl;
+
+
+}
